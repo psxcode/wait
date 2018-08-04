@@ -4,10 +4,8 @@ export const waitEx = (setTimeout: SetTimeoutFn, clearTimeout: ClearTimeoutFn) =
   (timeGetter = () => 0) =>
     (cb: () => void) =>
       (ms = timeGetter()) => {
-        let done = false
-        const id = setTimeout(() => done || cb(), ms)
+        const id = setTimeout(cb, ms)
         return () => {
-          done = true
           clearTimeout(id)
         }
       }

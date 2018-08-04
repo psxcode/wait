@@ -2,28 +2,37 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { waitEx } from './wait'
 
-const timeoutId = 42
-const expectedTimeoutMs = 1000
-const getTimeoutMs = () => expectedTimeoutMs
-
-const timeoutSpy = (cb: any, ms: number) => {
-  expect(expectedTimeoutMs).eq(ms)
-  setImmediate(cb)
-  return timeoutId
-}
-
-const clearTimeoutSpy = (id: any) => {
-  expect(timeoutId).eq(id)
+function makeTimeoutSpies () {
+  let timeoutId = 42
+  let canceled = false
+  const expectedTimeoutMs = 1000
+  return {
+    timeoutSpy (cb: any, ms: number) {
+      expect(expectedTimeoutMs).eq(ms)
+      canceled = false
+      setImmediate(() => canceled || cb())
+      return timeoutId
+    },
+    clearTimeoutSpy (id: any) {
+      expect(timeoutId).eq(id)
+      canceled = true
+    },
+    timeoutGetter () {
+      return expectedTimeoutMs
+    }
+  }
 }
 
 describe('[ waitRaw ]', () => {
   it('should work', (done) => {
-    waitEx(timeoutSpy, clearTimeoutSpy)(getTimeoutMs)(done)()
+    const { timeoutSpy, clearTimeoutSpy, timeoutGetter } = makeTimeoutSpies()
+    waitEx(timeoutSpy, clearTimeoutSpy)(timeoutGetter)(done)()
   })
 
   it('should cancel', (done) => {
+    const { timeoutSpy, clearTimeoutSpy, timeoutGetter } = makeTimeoutSpies()
     const spy = sinon.spy()
-    const unsub = waitEx(timeoutSpy, clearTimeoutSpy)(getTimeoutMs)(spy)()
+    const unsub = waitEx(timeoutSpy, clearTimeoutSpy)(timeoutGetter)(spy)()
     unsub()
     setTimeout(() => {
       sinon.assert.notCalled(spy)

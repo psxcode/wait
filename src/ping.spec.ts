@@ -1,18 +1,25 @@
 import { expect } from 'chai'
 import { pingEx } from './ping'
 
-const timeoutId = 42
-const expectedTimeoutMs = 1000
-const getTimeoutMs = () => expectedTimeoutMs
-
-const timeoutSpy = (cb: any, ms: number) => {
-  expect(expectedTimeoutMs).eq(ms)
-  setImmediate(cb)
-  return timeoutId
-}
-
-const clearTimeoutSpy = (id: any) => {
-  expect(timeoutId).eq(id)
+function makeTimeoutSpies () {
+  let timeoutId = 42
+  let canceled = false
+  const expectedTimeoutMs = 1000
+  return {
+    timeoutSpy (cb: any, ms: number) {
+      expect(expectedTimeoutMs).eq(ms)
+      canceled = false
+      setImmediate(() => canceled || cb())
+      return timeoutId
+    },
+    clearTimeoutSpy (id: any) {
+      expect(timeoutId).eq(id)
+      canceled = true
+    },
+    timeoutGetter () {
+      return expectedTimeoutMs
+    }
+  }
 }
 
 describe('[ pingRaw ]', () => {
@@ -20,14 +27,17 @@ describe('[ pingRaw ]', () => {
     let i = 0
     const maxCount = 2
     await new Promise(resolve => {
-      const unsub = pingEx(timeoutSpy, clearTimeoutSpy)(getTimeoutMs)(() => {
+      const { timeoutSpy, clearTimeoutSpy, timeoutGetter } = makeTimeoutSpies()
+      const unsub = pingEx(timeoutSpy, clearTimeoutSpy)(timeoutGetter)(() => {
         if (++i >= maxCount) {
           unsub()
           resolve()
         }
       })()
-    }).then(() => {
-      expect(i).eq(maxCount)
     })
+
+    await new Promise(resolve => setTimeout(resolve, 10))
+
+    expect(i).eq(maxCount)
   })
 })

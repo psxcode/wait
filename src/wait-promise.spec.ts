@@ -1,18 +1,24 @@
 import { expect } from 'chai'
 import { waitPromiseEx } from './wait-promise'
 
-const timeoutId = 42
-const expectedTimeoutMs = 1000
-const getTimeoutMs = () => expectedTimeoutMs
-
-const timeoutSpy = (cb: any, ms: number) => {
-  expect(expectedTimeoutMs).eq(ms)
-  setImmediate(cb)
-  return timeoutId
+function makeTimeoutSpies () {
+  let timeoutId = 42
+  const expectedTimeoutMs = 1000
+  return {
+    timeoutSpy (cb: any, ms: number) {
+      expect(expectedTimeoutMs).eq(ms)
+      setImmediate(cb)
+      return timeoutId
+    },
+    timeoutGetter () {
+      return expectedTimeoutMs
+    }
+  }
 }
 
 describe('[ waitPromiseRaw ]', () => {
   it('should work', async () => {
-    await waitPromiseEx(timeoutSpy)(getTimeoutMs)()
+    const { timeoutSpy, timeoutGetter } = makeTimeoutSpies()
+    await waitPromiseEx(timeoutSpy)(timeoutGetter)()
   })
 })
