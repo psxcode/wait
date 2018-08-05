@@ -1,6 +1,8 @@
 {
   "name": "@psxcode/wait",
   "version": "0.1.0",
+  "description": "Functional setTimeout and setInterval",
+  "keywords": ["setTimeout", "setInterval", "promise", "timeout", "functional"],
   "main": "build/index.js",
   "module": "build/index",
   "typings": "build/index.d.ts",
