@@ -7,16 +7,16 @@ npm install @psxcode/wait
 ```
 
 ### `wait`
+`(timeGetter?: () => number) => (cb: () => void) => (ms?: number) => () => void`
 ```ts
 import { wait } from '@psxcode/wait'
 
 // Signature
-(timeGetter = () => 0) =>    // provide optional time getter
-  (callback: () => void) =>  // callback
-  (ms = timeGetter()) =>     // provide optional wait ms
-  () => void                 // returns cancel function
+(timeGetter?: () => number) =>   // optional timeGetter, defaults to () => 0
+  (callback: () => void) =>      // callback
+  (ms?: number) =>               // optional timeout ms, defaults to timeGetter()
+  () => void                     // returns cancel function
 ```
-
 Usage with `timeGetter`:
 ```ts
 const timeGetter = () => Math.random() * 1000
@@ -30,8 +30,7 @@ const cancel = waiter() // timeout is taken from timeGetter
 // clear timeout
 cancel()
 ```
-
-Usage with `timeout` milliseconds:
+Usage with milliseconds:
 ```ts
 // create waiter function, skip timeGetter
 const waiter = wait()(callback)
@@ -44,15 +43,15 @@ cancel()
 ```
 
 ### `wait-promise`
+`(timeGetter?: () => number) => (ms?: number) => Promise<void>`
 ```ts
 import { waitPromise } from '@psxcode/wait'
 
 // Signature
-(timeGetter = () => 0) =>   // provide optional time getter
-  (ms = timeGetter()) =>    // provide optional ms
-  Promise<void>             // returns Promise
+(timeGetter: () => number) =>   // optional timeGetter, defaults to () => 0
+  (ms = timeGetter()) =>        // optional timeout ms, defaults to timeGetter()
+  Promise<void>                 // returns Promise
 ```
-
 Usage with `timeGetter`:
 ```ts
 const timeGetter = () => Math.random() * 1000
@@ -63,8 +62,7 @@ const waiter = waitPromise(timeGetter)
 // invoke waiter
 await waiter() // timeout is taken from timeGetter
 ```
-
-Usage with `timeout` milliseconds:
+Usage with milliseconds:
 ```ts
 // create waiter function, skip timeGetter
 const waiter = waitPromise()
@@ -74,16 +72,16 @@ await waiter(1000) // provide time
 ```
 
 ### `ping`
+`(timeGetter: () => number) => (cb: () => void) => () => () => void`
 ```ts
 import { ping } from '@psxcode/wait'
 
 // Signature
-(timeGetter: () => number) =>  // provide optional time getter
-  (callback: () => void) =>    // provide callback
+(timeGetter: () => number) =>  // timeGetter 
+  (callback: () => void) =>    // callback
   () =>                        // invoke to run
   () => void                   // returns cancel function
 ```
-
 Usage:
 ```ts
 const timeGetter = () => Math.random() * 1000
@@ -99,16 +97,16 @@ cancel()
 ```
 
 ### `wait-time`
+`(cb: () => void) => (ms: number) => () => void`
 Same as `wait`, but without `timeGetter`
 ```ts
 import { waitTime } from '@psxcode/wait'
 
 // Signature
 (callback: () => void) =>  // provide callback
-  (ms: number) =>          // provide ms
+  (ms: number) =>          // provide timeout ms
   () => void               // returns cancel function
 ```
-
 Usage:
 ```ts
 // create waiter function
@@ -122,15 +120,15 @@ cancel()
 ```
 
 ### `wait-time-promise`
+`(ms: number) => Promise<void>`
 Same as `wait-promise`, but without `timeGetter`
 ```ts
 import { waitTimePromise } from '@psxcode/wait'
 
 // Signature
-(ms: number) =>   // provide ms
+(ms: number) =>   // provide timeout ms
   Promise<void>   // returns Promise
 ```
-
 Usage:
 ```ts
 // invoke waiter
