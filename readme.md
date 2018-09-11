@@ -8,7 +8,7 @@ npm install @psxcode/wait
 
 ### `wait`
 ```ts
-import { wait } from @psxcode/wait
+import { wait } from '@psxcode/wait'
 
 // Signature
 type wait = (timeGetter = () => 0) =>  // provide optional time getter
@@ -45,7 +45,7 @@ cancel()
 
 ### `wait-promise`
 ```ts
-import { waitPromise } from @psxcode/wait
+import { waitPromise } from '@psxcode/wait'
 
 // Signature
 type waitPromise = (timeGetter = () => 0) => // provide optional time getter
@@ -75,7 +75,7 @@ await waiter(1000) // provide time
 
 ### `ping`
 ```ts
-import { ping } from @psxcode/wait
+import { ping } from '@psxcode/wait'
 
 // Signature
 type ping = (timeGetter: () => number) =>  // provide optional time getter
@@ -101,7 +101,7 @@ cancel()
 ### `wait-time`
 Same as `wait`, but without `timeGetter`
 ```ts
-import { waitTime } from @psxcode/wait
+import { waitTime } from '@psxcode/wait'
 
 // Signature
 type waitTime = (callback: () => void) =>  // provide callback
@@ -124,7 +124,7 @@ cancel()
 ### `wait-time-promise`
 Same as `wait-promise`, but without `timeGetter`
 ```ts
-import { waitTimePromise } from @psxcode/wait
+import { waitTimePromise } from '@psxcode/wait'
 
 // Signature
 type waitTimePromise = (ms: number) => // provide ms
