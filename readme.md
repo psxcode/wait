@@ -11,10 +11,10 @@ npm install @psxcode/wait
 import { wait } from '@psxcode/wait'
 
 // Signature
-(timeGetter = () => 0) =>  // provide optional time getter
-  (callback: () => void) =>            // callback
-  (ms = timeGetter()) =>               // provide optional wait ms
-  () => void                           // returns cancel function
+(timeGetter = () => 0) =>    // provide optional time getter
+  (callback: () => void) =>  // callback
+  (ms = timeGetter()) =>     // provide optional wait ms
+  () => void                 // returns cancel function
 ```
 
 Usage with `timeGetter`:
@@ -48,9 +48,9 @@ cancel()
 import { waitPromise } from '@psxcode/wait'
 
 // Signature
-(timeGetter = () => 0) => // provide optional time getter
-  (ms = timeGetter()) =>                     // provide optional ms
-  Promise<void>                              // returns Promise
+(timeGetter = () => 0) =>   // provide optional time getter
+  (ms = timeGetter()) =>    // provide optional ms
+  Promise<void>             // returns Promise
 ```
 
 Usage with `timeGetter`:
@@ -79,9 +79,9 @@ import { ping } from '@psxcode/wait'
 
 // Signature
 (timeGetter: () => number) =>  // provide optional time getter
-  (callback: () => void) =>                // provide callback
-  () =>                                    // invoke to run
-  () => void                               // returns cancel function
+  (callback: () => void) =>    // provide callback
+  () =>                        // invoke to run
+  () => void                   // returns cancel function
 ```
 
 Usage:
@@ -105,8 +105,8 @@ import { waitTime } from '@psxcode/wait'
 
 // Signature
 (callback: () => void) =>  // provide callback
-  (ms: number) =>                          // provide ms
-  () => void                               // returns cancel function
+  (ms: number) =>          // provide ms
+  () => void               // returns cancel function
 ```
 
 Usage:
@@ -127,8 +127,8 @@ Same as `wait-promise`, but without `timeGetter`
 import { waitTimePromise } from '@psxcode/wait'
 
 // Signature
-(ms: number) => // provide ms
-  Promise<void>                        // returns Promise
+(ms: number) =>   // provide ms
+  Promise<void>   // returns Promise
 ```
 
 Usage:
