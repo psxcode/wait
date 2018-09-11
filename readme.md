@@ -6,7 +6,7 @@ Functional `setTimeout` and `setInterval`.
 npm install @psxcode/wait
 ```
 
-### wait
+### `wait`
 ```ts
 import { wait } from @psxcode/wait
 
@@ -43,7 +43,7 @@ const cancel = waiter(1000) // provide time
 cancel()
 ```
 
-### wait-promise
+### `wait-promise`
 ```ts
 import { waitPromise } from @psxcode/wait
 
@@ -73,7 +73,7 @@ const waiter = waitPromise()
 await waiter(1000) // provide time
 ```
 
-### ping
+### `ping`
 ```ts
 import { ping } from @psxcode/wait
 
@@ -98,7 +98,7 @@ const cancel = pinger() // returns cancel function
 cancel()
 ```
 
-### wait-time
+### `wait-time`
 Same as `wait`, but without `timeGetter`
 ```ts
 import { waitTime } from @psxcode/wait
@@ -121,7 +121,7 @@ const cancel = waiter(1000) // provide time
 cancel()
 ```
 
-### wait-time-promise
+### `wait-time-promise`
 Same as `wait-promise`, but without `timeGetter`
 ```ts
 import { waitTimePromise } from @psxcode/wait
