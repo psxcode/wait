@@ -3,6 +3,7 @@ import { ClearTimeoutFn, SetTimeoutFn } from './types'
 
 export const pingEx = (setTimeout: SetTimeoutFn, clearTimeout: ClearTimeoutFn) => {
   const waitFn = waitEx(setTimeout, clearTimeout)
+
   return (timeGetter: () => number) =>
     (cb: () => void) => {
       let unsub: any
@@ -16,6 +17,7 @@ export const pingEx = (setTimeout: SetTimeoutFn, clearTimeout: ClearTimeoutFn) =
 
       return () => {
         unsub = wait()
+
         return () => {
           done = true
           unsub()

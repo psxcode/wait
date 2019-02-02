@@ -4,14 +4,16 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { waitEx } from '../src/wait'
 
 function makeTimeoutSpies () {
-  let timeoutId = 42
+  const timeoutId = 42
   let canceled = false
   const expectedTimeoutMs = 1000
+
   return {
     timeoutSpy (cb: any, ms: number) {
       expect(expectedTimeoutMs).eq(ms)
       canceled = false
       setImmediate(() => canceled || cb())
+
       return timeoutId
     },
     clearTimeoutSpy (id: any) {
@@ -20,7 +22,7 @@ function makeTimeoutSpies () {
     },
     timeoutGetter () {
       return expectedTimeoutMs
-    }
+    },
   }
 }
 

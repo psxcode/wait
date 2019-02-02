@@ -3,17 +3,19 @@ import { expect } from 'chai'
 import { waitPromiseEx } from '../src/wait-promise'
 
 function makeTimeoutSpies () {
-  let timeoutId = 42
+  const timeoutId = 42
   const expectedTimeoutMs = 1000
+
   return {
     timeoutSpy (cb: any, ms: number) {
       expect(expectedTimeoutMs).eq(ms)
       setImmediate(cb)
+
       return timeoutId
     },
     timeoutGetter () {
       return expectedTimeoutMs
-    }
+    },
   }
 }
 

@@ -5,6 +5,7 @@ export const waitEx = (setTimeout: SetTimeoutFn, clearTimeout: ClearTimeoutFn) =
     (cb: () => void) =>
       (ms = timeGetter()) => {
         const id = setTimeout(cb, ms)
+
         return () => {
           clearTimeout(id)
         }
