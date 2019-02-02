@@ -1,6 +1,7 @@
+import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import * as sinon from 'sinon'
-import { waitEx } from './wait'
+import { createSpy, getSpyCalls } from 'spyfn'
+import { waitEx } from '../src/wait'
 
 function makeTimeoutSpies () {
   let timeoutId = 42
@@ -31,11 +32,12 @@ describe('[ waitRaw ]', () => {
 
   it('should cancel', (done) => {
     const { timeoutSpy, clearTimeoutSpy, timeoutGetter } = makeTimeoutSpies()
-    const spy = sinon.spy()
+    const spy = createSpy(() => {})
     const unsub = waitEx(timeoutSpy, clearTimeoutSpy)(timeoutGetter)(spy)()
     unsub()
+
     setTimeout(() => {
-      sinon.assert.notCalled(spy)
+      expect(getSpyCalls(spy)).deep.eq([])
       done()
     }, 10)
   })

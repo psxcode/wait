@@ -1,5 +1,6 @@
+import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import { pingEx } from './ping'
+import { pingEx } from '../src/ping'
 
 function makeTimeoutSpies () {
   let timeoutId = 42

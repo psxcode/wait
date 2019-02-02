@@ -1,5 +1,6 @@
+import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import { waitPromiseEx } from './wait-promise'
+import { waitPromiseEx } from '../src/wait-promise'
 
 function makeTimeoutSpies () {
   let timeoutId = 42
