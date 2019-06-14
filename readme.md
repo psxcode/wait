@@ -1,4 +1,7 @@
 # Wait
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/psxcode/wait.svg)](https://greenkeeper.io/)
+
 Functional `setTimeout` and `setInterval`.
 
 ### Install
